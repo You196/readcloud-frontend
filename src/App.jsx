@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import './index.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+
 const AuthModalContext = createContext();
 
 const AuthModal = ({ isOpen, onClose, mode = 'login', showWelcome = false }) => {
@@ -26,7 +28,7 @@ const AuthModal = ({ isOpen, onClose, mode = 'login', showWelcome = false }) => 
     const body = mode === 'login' ? { email: formData.email, password: formData.password } : formData;
 
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -417,7 +419,7 @@ const TrendingBooksCarousel = () => {
     const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
     
     try {
-      const response = await fetch(`/api/books/search?q=${randomSubject}&maxResults=12`);
+      const response = await fetch(`${API_BASE_URL}/api/books/search?q=${randomSubject}&maxResults=12`);
       const data = await response.json();
       const books = Array.isArray(data) ? data.slice(0, 10) : [];
       setTrendingBooks(books);
@@ -690,7 +692,7 @@ const SearchPage = () => {
     setLoading(true);
     setHasSearched(true);
     try {
-      const response = await fetch(`/api/books/search?q=${encodeURIComponent(searchTerm)}`);
+      const response = await fetch(`${API_BASE_URL}/api/books/search?q=${encodeURIComponent(searchTerm)}`);
       const data = await response.json();
       const results = Array.isArray(data) ? data : [];
       setResults(results);
@@ -971,7 +973,7 @@ const BookDetailsPage = () => {
       
       if (isMongoId && token) {
         // Private route: /library/:id - fetch from user's library
-        const libraryRes = await fetch(`/api/library/${id}`, {
+        const libraryRes = await fetch(`${API_BASE_URL}/api/library/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         
@@ -981,8 +983,8 @@ const BookDetailsPage = () => {
           setCurrentPage(libraryData.currentPage || 0);
           
           const [notesRes, reviewRes] = await Promise.all([
-            fetch(`/api/notes/book/${id}`, { headers: { 'Authorization': `Bearer ${token}` } }),
-            fetch(`/api/reviews/book/${id}`, { headers: { 'Authorization': `Bearer ${token}` } })
+            fetch(`${API_BASE_URL}/api/notes/book/${id}`, { headers: { 'Authorization': `Bearer ${token}` } }),
+            fetch(`${API_BASE_URL}/api/reviews/book/${id}`, { headers: { 'Authorization': `Bearer ${token}` } })
           ]);
           
           const notesData = await notesRes.json();
@@ -996,7 +998,7 @@ const BookDetailsPage = () => {
         }
       } else {
         // Public route: /book/:googleBooksId - fetch from Google Books API by ID
-        const googleRes = await fetch(`/api/books/${id}`);
+        const googleRes = await fetch(`${API_BASE_URL}/api/books/${id}`);
         const googleData = await googleRes.json();
         if (googleData && googleData.id) {
           setGoogleBook(googleData);
@@ -1027,7 +1029,7 @@ const BookDetailsPage = () => {
       const status = newPage >= validPageCount ? 'finished' : 
                      newPage > 0 ? 'reading' : libraryBook.status;
       
-      const response = await fetch(`/api/library/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/library/${id}`, {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',
@@ -1109,7 +1111,7 @@ const BookDetailsPage = () => {
   const deleteNote = async (noteId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/notes/${noteId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/notes/${noteId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -1407,7 +1409,7 @@ const LibraryPage = () => {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/library/${bookId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/library/${bookId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ status })
@@ -1447,7 +1449,7 @@ const LibraryPage = () => {
               toast.dismiss();
               try {
                 const token = localStorage.getItem('token');
-                await fetch(`/api/library/${bookId}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+                await fetch(`${API_BASE_URL}/api/library/${bookId}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
                 fetchLibrary();
                 toast.success('Book removed from library');
               } catch (error) { console.error('Remove book error:', error); }
@@ -1883,7 +1885,7 @@ const Auth = ({ type }) => {
     const body = type === 'login' ? { email: formData.email.trim(), password: formData.password } : { email: formData.email.trim(), password: formData.password, displayName: formData.displayName.trim() };
 
     try {
-      const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       const data = await response.json();
       if (response.ok) { 
         login(data, data.token); 

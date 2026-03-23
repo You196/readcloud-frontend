@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import './Auth.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+
 function Auth({ type }) {
   const [formData, setFormData] = useState({
     email: '',
@@ -31,7 +33,7 @@ function Auth({ type }) {
       : { email, password, displayName };
 
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
