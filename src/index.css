@@ -686,11 +686,12 @@ body {
 .star.filled { color: #ffc107; }
 
 /* Note Panel */
-.note-panel-toggle { position: fixed; right: 0; top: 50%; transform: translateY(-50%); background: var(--primary); color: white; border: none; padding: 1rem 0.75rem; border-radius: 8px 0 0 8px; cursor: pointer; font-weight: 600; box-shadow: -4px 0 15px rgba(0,0,0,0.15); z-index: 100; writing-mode: vertical-rl; }
-.note-panel { position: fixed; right: 0; top: 0; bottom: 0; width: 380px; background: var(--warm-white); box-shadow: -5px 0 30px rgba(0,0,0,0.15); padding: 1.5rem; overflow-y: auto; z-index: 101; }
+.note-panel-toggle { position: fixed; right: 0; top: 50%; transform: translateY(-50%); background: var(--primary); color: white; border: none; padding: 1rem 0.75rem; border-radius: 8px 0 0 8px; cursor: pointer; font-weight: 600; box-shadow: -4px 0 15px rgba(0,0,0,0.15); z-index: 999; writing-mode: vertical-rl; }
+.note-panel { position: fixed; right: 0; top: 60px; bottom: 0; width: 380px; background: var(--warm-white); box-shadow: -5px 0 30px rgba(0,0,0,0.15); padding: 1.5rem; overflow-y: auto; z-index: 998; transition: transform 0.3s ease-in-out; }
 .note-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
 .note-panel-header h3 { color: var(--text-dark); }
-.close-panel { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+.close-panel { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); padding: 0.5rem; }
+.close-panel:hover { color: var(--text-dark); }
 .note-form { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--secondary); }
 .note-form textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--secondary); border-radius: 8px; resize: vertical; font-family: inherit; }
 .note-options { display: flex; justify-content: space-between; align-items: center; }

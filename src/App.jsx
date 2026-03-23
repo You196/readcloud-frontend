@@ -841,7 +841,8 @@ const NotePanel = ({ notes, onAddNote, onDeleteNote, isOpen, onToggle }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newNote.trim()) {
-      onAddNote({ content: newNote, pageNumber: pageNumber || null, isQuote });
+      const pageNum = pageNumber ? parseInt(pageNumber, 10) : undefined;
+      onAddNote({ content: newNote, pageNumber: pageNum, isQuote });
       setNewNote('');
       setPageNumber('');
       setIsQuote(false);
