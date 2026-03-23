@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import './index.css';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://readcloud-bue-crgcb6ffbxghfhfy.germanywestcentral-01.azurewebsites.net';
 
 const AuthModalContext = createContext();
 
@@ -441,7 +441,7 @@ const TrendingBooksCarousel = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('/api/library', {
+      const res = await fetch(`${API_BASE_URL}/api/library`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({
@@ -721,7 +721,7 @@ const SearchPage = () => {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/library', {
+      const response = await fetch(`${API_BASE_URL}/api/library`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({
@@ -1046,7 +1046,7 @@ const BookDetailsPage = () => {
           setShowCelebration(true);
         }
         
-        const userRes = await fetch('/api/auth/profile', { 
+        const userRes = await fetch(`${API_BASE_URL}/api/auth/profile`, { 
           headers: { 'Authorization': `Bearer ${token}` } 
         });
         const userData = await userRes.json();
@@ -1085,7 +1085,7 @@ const BookDetailsPage = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/notes', {
+      const response = await fetch(`${API_BASE_URL}/api/notes`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -1139,7 +1139,7 @@ const BookDetailsPage = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/reviews', {
+      const response = await fetch(`${API_BASE_URL}/api/reviews`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -1172,7 +1172,7 @@ const BookDetailsPage = () => {
     try {
       const token = localStorage.getItem('token');
       const bookToAdd = googleBook;
-      const response = await fetch('/api/library', {
+      const response = await fetch(`${API_BASE_URL}/api/library`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -1393,7 +1393,7 @@ const LibraryPage = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/library', { headers: { 'Authorization': `Bearer ${token}` } });
+      const response = await fetch(`${API_BASE_URL}/api/library`, { headers: { 'Authorization': `Bearer ${token}` } });
       const data = await response.json();
       setBooks(data || []);
     } catch (error) { console.error('Fetch library error:', error); }
@@ -1426,7 +1426,7 @@ const LibraryPage = () => {
       
       if (status === 'finished') {
         toast.success('Congratulations on finishing the book! 🎉');
-        const userResponse = await fetch('/api/auth/profile', { 
+        const userResponse = await fetch(`${API_BASE_URL}/api/auth/profile`, { 
           headers: { 'Authorization': `Bearer ${token}` } 
         });
         const userData = await userResponse.json();
@@ -1541,7 +1541,7 @@ const DashboardPage = () => {
   const fetchDashboard = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/library/dashboard-stats', { headers: { 'Authorization': `Bearer ${token}` } });
+      const response = await fetch(`${API_BASE_URL}/api/library/dashboard-stats`, { headers: { 'Authorization': `Bearer ${token}` } });
       const data = await response.json();
       setStats(data);
     } catch (error) { console.error('Fetch dashboard error:', error); }
@@ -1573,7 +1573,7 @@ const DashboardPage = () => {
     try {
       const token = localStorage.getItem('token');
       const startTime = performance.now();
-      const response = await fetch('/api/auth/goal', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/goal`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ target: goalTarget })
