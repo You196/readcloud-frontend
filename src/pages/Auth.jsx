@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { Eye, EyeOff } from 'lucide-react';
 import './Auth.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://readcloud-bue-crgcb6ffbxghfhfy.germanywestcentral-01.azurewebsites.net';
@@ -13,6 +14,7 @@ function Auth({ type }) {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
@@ -95,15 +97,25 @@ function Auth({ type }) {
 
           <div className="form-group">
             <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={onChange}
-              placeholder="••••••••"
-              required
-              minLength={6}
-            />
+            <div className="password-input-wrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={onChange}
+                placeholder="••••••••"
+                required
+                minLength={6}
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
 
           <button type="submit" className="auth-btn" disabled={loading}>
