@@ -1626,17 +1626,17 @@ const DashboardPage = () => {
 
   const goal = user?.readingGoal || { target: 12, current: 0, year: new Date().getFullYear() };
   const finishedBooks = stats.booksFinished || 0;
-  const goalTarget = goal.target || 12;
-  const isOverAchieved = finishedBooks > goalTarget;
-  const isGoalMet = finishedBooks === goalTarget && finishedBooks > 0;
-  const progress = goalTarget > 0 ? Math.round((finishedBooks / goalTarget) * 100) : 0;
+  const currentGoalTarget = goal.target || 12;
+  const isOverAchieved = finishedBooks > currentGoalTarget;
+  const isGoalMet = finishedBooks === currentGoalTarget && finishedBooks > 0;
+  const progress = currentGoalTarget > 0 ? Math.round((finishedBooks / currentGoalTarget) * 100) : 0;
   
   let goalMessage = "Keep up the great work!";
   let goalBadge = null;
   
   if (isOverAchieved) {
-    goalMessage = `Goal Crushed! 🎉 You exceeded your goal by ${finishedBooks - goalTarget} book${finishedBooks - goalTarget > 1 ? 's' : ''}!`;
-    goalBadge = `🔥 Goal Crushed! +${finishedBooks - goalTarget}`;
+    goalMessage = `Goal Crushed! 🎉 You exceeded your goal by ${finishedBooks - currentGoalTarget} book${finishedBooks - currentGoalTarget > 1 ? 's' : ''}!`;
+    goalBadge = `🔥 Goal Crushed! +${finishedBooks - currentGoalTarget}`;
   } else if (isGoalMet) {
     goalMessage = "Goal achieved! 🎉";
   }
@@ -1744,7 +1744,7 @@ const DashboardPage = () => {
             <CircularProgress 
               percentage={progress} 
               current={finishedBooks} 
-              target={goalTarget}
+              target={currentGoalTarget}
               isOverAchieved={isOverAchieved}
             />
           </div>
