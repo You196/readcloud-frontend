@@ -556,14 +556,15 @@ const SkeletonStatCard = () => (
   </div>
 );
 
-const CircularProgress = ({ percentage, current, target }) => {
+const CircularProgress = ({ percentage, current, target, isOverAchieved }) => {
   const radius = 54;
   const stroke = 8;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percentage / 100) * circumference;
+  const visualPercentage = Math.min(percentage, 100);
+  const offset = circumference - (visualPercentage / 100) * circumference;
 
   return (
-    <div className="circular-progress">
+    <div className={`circular-progress ${isOverAchieved ? 'over-achieved' : ''}`}>
       <svg width="140" height="140" viewBox="0 0 140 140">
         <circle
           className="progress-bg"
@@ -573,7 +574,7 @@ const CircularProgress = ({ percentage, current, target }) => {
           strokeWidth={stroke}
         />
         <motion.circle
-          className="progress-fill"
+          className={`progress-fill ${isOverAchieved ? 'over-achieved' : ''}`}
           cx="70"
           cy="70"
           r={radius}
@@ -1624,7 +1625,21 @@ const DashboardPage = () => {
   if (!stats) return <div className="loading">Failed to load dashboard</div>;
 
   const goal = user?.readingGoal || { target: 12, current: 0, year: new Date().getFullYear() };
-  const progress = goal.target > 0 ? Math.round((goal.current / goal.target) * 100) : 0;
+  const finishedBooks = stats.booksFinished || 0;
+  const goalTarget = goal.target || 12;
+  const isOverAchieved = finishedBooks > goalTarget;
+  const isGoalMet = finishedBooks === goalTarget && finishedBooks > 0;
+  const progress = goalTarget > 0 ? Math.round((finishedBooks / goalTarget) * 100) : 0;
+  
+  let goalMessage = "Keep up the great work!";
+  let goalBadge = null;
+  
+  if (isOverAchieved) {
+    goalMessage = `Goal Crushed! 🎉 You exceeded your goal by ${finishedBooks - goalTarget} book${finishedBooks - goalTarget > 1 ? 's' : ''}!`;
+    goalBadge = `🔥 Goal Crushed! +${finishedBooks - goalTarget}`;
+  } else if (isGoalMet) {
+    goalMessage = "Goal achieved! 🎉";
+  }
 
   return (
     <motion.div 
@@ -1720,13 +1735,17 @@ const DashboardPage = () => {
                   </motion.button>
                 </div>
               ) : (
-                <p className="goal-subtitle">Keep up the great work!</p>
+                <div className="goal-status">
+                  {goalBadge && <span className="goal-badge">{goalBadge}</span>}
+                  <p className="goal-subtitle">{goalMessage}</p>
+                </div>
               )}
             </div>
             <CircularProgress 
               percentage={progress} 
-              current={goal.current} 
-              target={goal.target} 
+              current={finishedBooks} 
+              target={goalTarget}
+              isOverAchieved={isOverAchieved}
             />
           </div>
         </motion.div>

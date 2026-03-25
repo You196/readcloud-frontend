@@ -534,10 +534,14 @@ body {
 .goal-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
 .goal-card-header h3 { font-size: 1.25rem; margin-bottom: 0.25rem; color: white; }
 .goal-subtitle { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-top: 0.5rem; }
+.goal-status { display: flex; flex-direction: column; gap: 0.5rem; }
+.goal-badge { display: inline-block; background: linear-gradient(135deg, #ff6b6b, #feca57); color: white; padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; width: fit-content; }
 .circular-progress { position: relative; display: flex; align-items: center; justify-content: center; }
 .circular-progress svg { transform: rotate(-90deg); }
 .progress-bg { fill: none; stroke: rgba(255,255,255,0.2); }
 .progress-fill { fill: none; stroke: white; }
+.progress-fill.over-achieved { stroke: #feca57; }
+.circular-progress.over-achieved .progress-percent { color: #feca57; }
 .circular-progress-text { position: absolute; text-align: center; color: white; }
 .progress-fraction { display: block; font-size: 0.9rem; font-weight: 600; }
 .progress-percent { display: block; font-size: 1.5rem; font-weight: 700; }
