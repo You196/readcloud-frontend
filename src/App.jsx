@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
+import { Eye, EyeOff } from 'lucide-react';
 import './index.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://readcloud-bue-crgcb6ffbxghfhfy.germanywestcentral-01.azurewebsites.net';
@@ -1864,6 +1865,7 @@ const Auth = ({ type }) => {
   const [formData, setFormData] = useState({ email: '', password: '', displayName: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
@@ -1953,14 +1955,38 @@ const Auth = ({ type }) => {
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input 
-              type="password" 
-              value={formData.password} 
-              onChange={(e) => setFormData({...formData, password: e.target.value})} 
-              placeholder="••••••••" 
-              minLength={6}
-              required 
-            />
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%' }}>
+              <input 
+                type={showPassword ? 'text' : 'password'} 
+                value={formData.password} 
+                onChange={(e) => setFormData({...formData, password: e.target.value})} 
+                placeholder="••••••••" 
+                minLength={6}
+                required 
+                style={{ width: '100% !important', paddingRight: '2.5rem !important' }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  zIndex: 10,
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: '#666',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '0.25rem'
+                }}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
           <button type="submit" className="auth-btn" disabled={loading}>{loading ? 'Please wait...' : type === 'login' ? 'Sign In' : 'Create Account'}</button>
         </form>
