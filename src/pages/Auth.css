@@ -2,20 +2,24 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .password-input-wrapper input {
-  width: 100%;
-  padding-right: 3rem;
+  width: 100% !important;
+  padding-right: 2.5rem !important;
 }
 
 .password-toggle {
   position: absolute;
-  right: 0.75rem;
-  background: none;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: transparent !important;
   border: none;
   cursor: pointer;
-  color: var(--text-muted);
+  color: #666;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,5 +28,9 @@
 }
 
 .password-toggle:hover {
-  color: var(--text-dark);
+  color: #333;
+}
+
+.password-toggle svg {
+  display: block;
 }
