@@ -1955,7 +1955,7 @@ const Auth = ({ type }) => {
           </div>
           <div className="form-group">
             <label>Password</label>
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%' }}>
+            <div style={{ position: 'relative', width: '100%' }}>
               <input 
                 type={showPassword ? 'text' : 'password'} 
                 value={formData.password} 
@@ -1963,25 +1963,25 @@ const Auth = ({ type }) => {
                 placeholder="••••••••" 
                 minLength={6}
                 required 
-                style={{ width: '100% !important', paddingRight: '2.5rem !important' }}
+                className="auth-input"
+                style={{ width: '100%', paddingRight: '40px', boxSizing: 'border-box' }}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 style={{
                   position: 'absolute',
-                  right: '10px',
+                  right: '12px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  zIndex: 10,
                   background: 'transparent',
                   border: 'none',
+                  padding: 0,
+                  outline: 'none',
                   cursor: 'pointer',
-                  color: '#666',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '0.25rem'
+                  color: '#6b7280'
                 }}
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
