@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { Eye, EyeOff } from 'lucide-react';
 import './index.css';
+import MyLibraryPage from './pages/MyLibraryPage';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://readcloud-bue-crgcb6ffbxghfhfy.germanywestcentral-01.azurewebsites.net';
 
@@ -171,6 +172,7 @@ const Sidebar = ({ isOpen, onToggle }) => {
   const userNavItems = [
     { icon: '📊', label: 'Dashboard', path: '/dashboard' },
     { icon: '📚', label: 'My Library', path: '/library' },
+    { icon: '🗂️', label: 'My Books',   path: '/my-library' },
     { icon: '🔍', label: 'Search Books', path: '/' },
   ];
 
@@ -2017,6 +2019,7 @@ function AppContent() {
             <Route path="/login" element={<PublicRoute><Auth type="login" /></PublicRoute>} />
             <Route path="/register" element={<PublicRoute><Auth type="register" /></PublicRoute>} />
             <Route path="/library" element={<ProtectedRoute><LibraryPage /></ProtectedRoute>} />
+            <Route path="/my-library" element={<ProtectedRoute><MyLibraryPage /></ProtectedRoute>} />
             <Route path="/library/:id" element={<ProtectedRoute><BookDetailsPage /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           </Routes>
