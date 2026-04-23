@@ -9,11 +9,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import './MyLibrary.css';
 
-import LibraryBookCard   from '../components/library/LibraryBookCard';
-import LibrarySearchBar  from '../components/library/LibrarySearchBar';
-import LibraryFilters    from '../components/library/LibraryFilters';
-import LibraryPagination from '../components/library/LibraryPagination';
-import LibraryStats      from '../components/library/LibraryStats';
+import LibraryBookCard   from '../components/Library/LibraryBookCard';
+import LibrarySearchBar  from '../components/Library/LibrarySearchBar';
+import LibraryFilters    from '../components/Library/LibraryFilters';
+import LibraryPagination from '../components/Library/LibraryPagination';
+import LibraryStats      from '../components/Library/LibraryStats';
 
 import {
   fetchMyLibrary,
