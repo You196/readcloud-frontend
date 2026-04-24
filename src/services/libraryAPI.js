@@ -6,7 +6,7 @@
   || 'https://readcloud-bue-crgcb6ffbxghfhfy.germanywestcentral-01.azurewebsites.net';
 */
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
-  || 'http://localhost:5000';
+  || 'https://readcloud-bue-crgcb6ffbxghfhfy.germanywestcentral-01.azurewebsites.net';
 const authHeader = () => ({
   'Content-Type': 'application/json',
   'Authorization': `Bearer ${localStorage.getItem('token')}`,
